@@ -96,12 +96,14 @@ static void errorAt(Token* token, const char* message) {
 
     int col = (int)(token->start - lineStart) + 1;
     int lineLength = (int)(lineEnd - lineStart);
-    char* lineStr = (char*)malloc(lineLength + 1);
+    if (lineLength > 1024) lineLength = 1024;
+    
+    char* lineStr = (char*)malloc((size_t)lineLength + 1);
     if (lineStr == NULL) {
         fprintf(stderr, "Memory allocation failed in error reporting.\n");
         exit(1);
     }
-    memcpy(lineStr, lineStart, lineLength);
+    memcpy(lineStr, lineStart, (size_t)lineLength);
     lineStr[lineLength] = '\0';
 
     const char* moduleName = parser.module->name != NULL ? parser.module->name->chars : "<script>";

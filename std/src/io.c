@@ -1,16 +1,16 @@
 #include <stdio.h>
-
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <unistd.h> // For rmdir
+#include <unistd.h>
+#include <ctype.h>
 
 #include "io.h"
 #include "value.h"
-#include "object.h" // For string objects
-#include "vm.h"     // For runtimeError
-#include <ctype.h>
+#include "object.h"
+#include "vm.h"
+
+extern VM vm;
 
 // Helper to trim leading/trailing whitespace and quotes from a string, in-place.
 static void trimString(char* str) {
@@ -38,6 +38,11 @@ static void trimString(char* str) {
 }
 
 Value printNative(int argCount, Value* args) {
+    if (vm.profiler.profiling_mode) {
+        vm.profiler.output_operations++;
+        return NIL_VAL;
+    }
+    
     for (int i = 0; i < argCount; i++) {
         printValue(args[i]);
         if (i < argCount - 1) {
@@ -48,6 +53,11 @@ Value printNative(int argCount, Value* args) {
 }
 
 Value printlnNative(int argCount, Value* args) {
+    if (vm.profiler.profiling_mode) {
+        vm.profiler.output_operations++;
+        return NIL_VAL;
+    }
+    
     printNative(argCount, args);
     printf("\n");
     return NIL_VAL;
@@ -87,6 +97,10 @@ Value readFileNative(int argCount, Value* args) {
         runtimeError("readFile() expects one string argument (path).");
         return NIL_VAL;
     }
+    
+    if (vm.profiler.profiling_mode) {
+        return OBJ_VAL(copyString("", 0));
+    }
 
     const char* path = AS_CSTRING(args[0]);
     FILE* file = fopen(path, "rb");
@@ -125,6 +139,10 @@ Value writeFileNative(int argCount, Value* args) {
         runtimeError("writeFile() takes two string arguments (path, content).");
         return NIL_VAL;
     }
+    
+    if (vm.profiler.profiling_mode) {
+        return BOOL_VAL(true);
+    }
     const char* path = AS_CSTRING(args[0]);
     const char* content = AS_CSTRING(args[1]);
 
@@ -145,6 +163,10 @@ Value appendFileNative(int argCount, Value* args) {
     if (argCount != 2 || !IS_STRING(args[0]) || !IS_STRING(args[1])) {
         runtimeError("appendFile() takes two string arguments (path, content).");
         return NIL_VAL;
+    }
+    
+    if (vm.profiler.profiling_mode) {
+        return BOOL_VAL(true);
     }
     const char* path = AS_CSTRING(args[0]);
     const char* content = AS_CSTRING(args[1]);
@@ -175,6 +197,10 @@ Value deleteFileNative(int argCount, Value* args) {
     if (argCount != 1 || !IS_STRING(args[0])) {
         runtimeError("deleteFile() takes one string argument (path).");
         return NIL_VAL;
+    }
+    
+    if (vm.profiler.profiling_mode) {
+        return BOOL_VAL(true);
     }
     const char* path = AS_CSTRING(args[0]);
     return BOOL_VAL(remove(path) == 0);
@@ -234,6 +260,10 @@ Value createDirNative(int argCount, Value* args) {
         runtimeError("createDir() expects one string argument (path).");
         return NIL_VAL;
     }
+    
+    if (vm.profiler.profiling_mode) {
+        return BOOL_VAL(true);
+    }
     const char* path = AS_CSTRING(args[0]);
     // mkdir returns 0 on success. We'll return true for success.
     // The second argument is the mode, 0777 is a common default.
@@ -244,6 +274,10 @@ Value removeDirNative(int argCount, Value* args) {
     if (argCount != 1 || !IS_STRING(args[0])) {
         runtimeError("removeDir() takes one string argument (path).");
         return NIL_VAL;
+    }
+    
+    if (vm.profiler.profiling_mode) {
+        return BOOL_VAL(true);
     }
     const char* path = AS_CSTRING(args[0]);
     // rmdir returns 0 on success.

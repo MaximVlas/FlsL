@@ -71,8 +71,13 @@ static void errorAt(Token* token, const char* message) {
 
     int col = (int)(token->start - lineStart) + 1;
     int lineLength = (int)(lineEnd - lineStart);
-    char* lineStr = (char*)malloc(lineLength + 1);
-    memcpy(lineStr, lineStart, lineLength);
+    if (lineLength > 1024) lineLength = 1024;
+    
+    char* lineStr = (char*)malloc((size_t)lineLength + 1);
+    if (lineStr == NULL) {
+        return;
+    }
+    memcpy(lineStr, lineStart, (size_t)lineLength);
     lineStr[lineLength] = '\0';
 
     reportError(true, parser.module->name->chars, token->line, lineStr, col, token->length, message);

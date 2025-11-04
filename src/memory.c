@@ -1,17 +1,55 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
 
 #include "memory.h"
 #include "object.h"
 #include "vm.h"
 
 void* reallocate(void* pointer, size_t oldSize, size_t newSize) {
+  vm.bytesAllocated += newSize - oldSize;
+  
   if (newSize == 0) {
     free(pointer);
     return NULL;
   }
 
+  if (newSize > SIZE_MAX / 2) {
+    fprintf(stderr, "Memory allocation too large\n");
+    exit(1);
+  }
+
+  if (vm.profiler.profiling_mode) {
+    uint64_t token_id = (uint64_t)pointer;
+    if (pointer == NULL) {
+      token_id = vm.profiler.total_allocations;
+    }
+    recordAllocation(&vm.profiler, token_id, newSize);
+    
+    if (oldSize > 0 && newSize > oldSize) {
+      recordGrowth(&vm.profiler, token_id, newSize);
+    }
+    
+    return pointer ? pointer : (void*)1;
+  }
+
+  if (vm.profiler.preflight_complete && pointer == NULL) {
+    uint64_t token_id = vm.bytesAllocated;
+    MemoryPlan* plan = findMemoryPlan(&vm.profiler, token_id);
+    if (plan && plan->max_observed_size > newSize) {
+      size_t optimized_size = (size_t)(plan->max_observed_size * 1.01);
+      if (optimized_size > newSize && optimized_size < SIZE_MAX / 2) {
+        newSize = optimized_size;
+      }
+    }
+  }
+
   void* result = realloc(pointer, newSize);
-  if (result == NULL) exit(1);
+  if (result == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    exit(1);
+  }
+  
   return result;
 }
 

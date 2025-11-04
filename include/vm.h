@@ -5,18 +5,18 @@
 #include "object.h"
 #include "table.h"
 #include "value.h"
+#include "profiler.h"
 
 #define FRAMES_MAX 64
 #define STACK_MAX (FRAMES_MAX * UINT8_COUNT)
 
-// Represents a single function call on the call stack.
 typedef struct {
     ObjFunction* function;
     uint8_t* ip;
     Value* slots;
+    uint64_t loop_counter;
 } CallFrame;
 
-// The virtual machine.
 typedef struct {
     CallFrame frames[FRAMES_MAX];
     int frameCount;
@@ -30,6 +30,10 @@ typedef struct {
     bool hadError;
     size_t bytesAllocated;
     size_t nextGC;
+    
+    Profiler profiler;
+    bool enable_preflight;
+    uint64_t instruction_count;
 } VM;
 
 typedef enum {

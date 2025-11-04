@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
 
 #include "object.h"
 #include "memory.h"
@@ -62,9 +63,21 @@ void printValue(Value value) {
         case VAL_BOOL:
             printf(AS_BOOL(value) ? "true" : "false");
             break;
-        case VAL_NIL: printf("nil"); break;
-        case VAL_NUMBER: printf("%g", AS_NUMBER(value)); break;
-        case VAL_OBJ: printObject(value); break;
+        case VAL_NIL: 
+            printf("nil"); 
+            break;
+        case VAL_NUMBER: {
+            double num = AS_NUMBER(value);
+            if (num == (long long)num && num >= LLONG_MIN && num <= LLONG_MAX) {
+                printf("%lld", (long long)num);
+            } else {
+                printf("%.15g", num);
+            }
+            break;
+        }
+        case VAL_OBJ: 
+            printObject(value); 
+            break;
     }
 }
 

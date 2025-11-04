@@ -16,6 +16,7 @@ SOURCES = \
 	src/compiler.c \
 	src/error.c \
 	src/vm.c \
+	src/profiler.c \
 	std/src/io.c \
 	std/src/math.c \
 	std/src/random.c \
@@ -38,7 +39,7 @@ CFLAGS = \
 	-Os \
 	-Wno-unused-parameter \
 	-Wno-unused-function
-	
+
 LDFLAGS = -lm -pthread
 
 # Debug flags (uncomment to enable bytecode and VM execution tracing)
