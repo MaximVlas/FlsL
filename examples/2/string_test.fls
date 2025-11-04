@@ -1,0 +1,36 @@
+import "std/string.fls";
+
+println("--- String Library Test ---");
+
+// Test trim()
+var spaced = "   hello world   ";
+println("trim('   hello world   ') = '" + trim(spaced) + "'");
+
+// Test toUpperCase()
+var lower = "i am lowercase";
+println("toUpperCase('i am lowercase') = " + toUpperCase(lower));
+
+// Test toLowerCase()
+var upper = "I AM UPPERCASE";
+println("toLowerCase('I AM UPPERCASE') = " + toLowerCase(upper));
+
+// Test join()
+var list = ["apple", "banana", "cherry"];
+println("join(['apple', 'banana', 'cherry'], ', ') = " + join(list, ", "));
+
+// Test split()
+var sentence = "this is a sentence";
+var words = split(sentence, " ");
+println("split('this is a sentence', ' ') length = " + toString(listLen(words)));
+
+// Test replace()
+println("replace('hello world', 'world', 'Fls') = " + replace("hello world", "world", "Fls"));
+// Test reverse()
+println("reverse('hello') = " + reverse("hello"));
+
+// Test padding
+println("padLeft('abc', 6, '-') = " + padLeft("abc", 6, "-"));
+println("padRight('abc', 6, '-') = " + padRight("abc", 6, "-"));
+
+// Test repeat
+println("repeat('ha', 3) = " + repeat("ha", 3));

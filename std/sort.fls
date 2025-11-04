@@ -1,0 +1,145 @@
+// Fls Standard Sorting Library
+
+// Sorts a list of numbers in ascending order using the Bubble Sort algorithm.
+// - list: The list to sort.
+// Returns the sorted list.
+export fun bubbleSort(list) {
+  var n = listLen(list);
+  var swapped = true;
+  while (swapped) {
+    swapped = false;
+    for (var i = 1; i < n; i = i + 1) {
+      if (listGet(list, i - 1) > listGet(list, i)) {
+        // Swap elements
+        var temp = listGet(list, i - 1);
+        listSet(list, i - 1, listGet(list, i));
+        listSet(list, i, temp);
+        swapped = true;
+      }
+    }
+  }
+  return list;
+}
+
+// --- Quick Sort ---
+// Sorts a list of numbers in ascending order using the Quick Sort algorithm.
+// This is generally much faster than Bubble Sort.
+
+fun partition(list, low, high) {
+    var pivot = listGet(list, high);
+    var i = low - 1;
+
+    for (var j = low; j < high; j = j + 1) {
+        if (listGet(list, j) < pivot) {
+            i = i + 1;
+            // Swap elements
+            var temp = listGet(list, i);
+            listSet(list, i, listGet(list, j));
+            listSet(list, j, temp);
+        }
+    }
+
+    // Swap pivot into correct position
+    var temp = listGet(list, i + 1);
+    listSet(list, i + 1, listGet(list, high));
+    listSet(list, high, temp);
+
+    return i + 1;
+}
+
+fun quickSortRecursive(list, low, high) {
+    if (low < high) {
+        var pi = partition(list, low, high);
+        quickSortRecursive(list, low, pi - 1);
+        quickSortRecursive(list, pi + 1, high);
+    }
+}
+
+export fun quickSort(list) {
+    var n = listLen(list);
+    if (n < 2) return list;
+    quickSortRecursive(list, 0, n - 1);
+    return list;
+}
+
+// --- Insertion Sort ---
+// Sorts a list of numbers in ascending order using the Insertion Sort algorithm.
+// Efficient for small lists and nearly-sorted lists.
+export fun insertionSort(list) {
+    var n = listLen(list);
+    for (var i = 1; i < n; i = i + 1) {
+        var key = listGet(list, i);
+        var j = i - 1;
+        while (j >= 0 and listGet(list, j) > key) {
+            listSet(list, j + 1, listGet(list, j));
+            j = j - 1;
+        }
+        listSet(list, j + 1, key);
+    }
+    return list;
+}
+
+// --- Merge Sort ---
+// Sorts a list of numbers in ascending order using the Merge Sort algorithm.
+
+fun merge(list, left, mid, right) {
+    var n1 = mid - left + 1;
+    var n2 = right - mid;
+
+    // Create temporary lists
+    var L = [];
+    var R = [];
+
+    // Copy data to temp lists L[] and R[]
+    for (var i = 0; i < n1; i = i + 1) {
+        listPush(L, listGet(list, left + i));
+    }
+    for (var j = 0; j < n2; j = j + 1) {
+        listPush(R, listGet(list, mid + 1 + j));
+    }
+
+    // Merge the temp lists back into list[left..right]
+    var i = 0; // Initial index of first sublist
+    var j = 0; // Initial index of second sublist
+    var k = left; // Initial index of merged sublist
+
+    while (i < n1 and j < n2) {
+        if (listGet(L, i) <= listGet(R, j)) {
+            listSet(list, k, listGet(L, i));
+            i = i + 1;
+        } else {
+            listSet(list, k, listGet(R, j));
+            j = j + 1;
+        }
+        k = k + 1;
+    }
+
+    // Copy the remaining elements of L[], if there are any
+    while (i < n1) {
+        listSet(list, k, listGet(L, i));
+        i = i + 1;
+        k = k + 1;
+    }
+
+    // Copy the remaining elements of R[], if there are any
+    while (j < n2) {
+        listSet(list, k, listGet(R, j));
+        j = j + 1;
+        k = k + 1;
+    }
+}
+
+fun mergeSortHelper(list, left, right) {
+    if (left < right) {
+        var mid = floor(left + (right - left) / 2);
+        // Sort first and second halves
+        mergeSortHelper(list, left, mid);
+        mergeSortHelper(list, mid + 1, right);
+        merge(list, left, mid, right);
+    }
+}
+
+export fun mergeSort(list) {
+    mergeSortHelper(list, 0, listLen(list) - 1);
+    return list;
+}

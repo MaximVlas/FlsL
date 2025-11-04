@@ -1,0 +1,12 @@
+// import_export_test.fls
+// Imports math_utils module and exercises exported members.
+
+println("--- Import/Export Test ---");
+
+import "examples/math_utils.fls";
+
+println("pi = " + toString(pi));
+println("add(2, 3) = " + toString(add(2, 3)));
+println("subtract(5, 1) = " + toString(subtract(5, 1)));
+
+println("If you see the correct arithmetic results above, import/export is working!\n");

@@ -1,0 +1,4 @@
+println("Hello from the standard library!");
+println(123);
+println(true);
+println(nil);

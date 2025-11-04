@@ -1,0 +1,31 @@
+import "std/random.fls";
+
+println("--- Testing Random Library ---");
+
+println("\n--- Testing randFloat() ---");
+var r_float = randFloat();
+println("A random float between 0 and 1: " + toString(r_float));
+// Basic check: ensure it's within the expected range
+if (r_float >= 0 and r_float < 1) {
+    println("randFloat() is in the correct range.");
+} else {
+    println("randFloat() is OUT of the correct range.");
+}
+
+println("\n--- Testing randInt(min, max) ---");
+var r_int = randInt(1, 10);
+println("A random integer between 1 and 10: " + toString(r_int));
+// Basic check: ensure it's within the expected range
+if (r_int >= 1 and r_int <= 10) {
+    println("randInt(1, 10) is in the correct range.");
+} else {
+    println("randInt(1, 10) is OUT of the correct range.");
+}
+
+var r_int2 = randInt(-5, 5);
+println("A random integer between -5 and 5: " + toString(r_int2));
+if (r_int2 >= -5 and r_int2 <= 5) {
+    println("randInt(-5, 5) is in the correct range.");
+} else {
+    println("randInt(-5, 5) is OUT of the correct range.");
+}

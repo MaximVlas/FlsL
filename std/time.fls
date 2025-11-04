@@ -1,0 +1,17 @@
+// Fls Standard Time Library
+
+// Returns the elapsed time in seconds since the program started.
+// This is a wrapper around the native clock() function for consistency.
+export fun time() {
+  return clock();
+}
+
+// Measures the execution time of a given function.
+// - fn: The function to benchmark.
+// Returns the time elapsed in seconds.
+export fun benchmark(fn) {
+  var startTime = clock();
+  fn();
+  var endTime = clock();
+  return endTime - startTime;
+}

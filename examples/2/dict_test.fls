@@ -1,0 +1,42 @@
+import "std/dict.fls";
+
+println("--- Testing Dictionary Library ---");
+
+// Create a new dictionary
+var myDict = new();
+println("New dictionary created.");
+
+// Test set and get
+println("\n--- Testing set and get ---");
+set(myDict, "name", "FLS");
+set(myDict, "version", 1.0);
+set(myDict, "is_awesome", true);
+
+var name = get(myDict, "name");
+var version = get(myDict, "version");
+var isAwesome = get(myDict, "is_awesome");
+
+println("Get 'name': " + toString(name));
+println("Get 'version': " + toString(version));
+println("Get 'is_awesome': " + toString(isAwesome));
+
+// Test exists
+println("\n--- Testing exists ---");
+var nameExists = exists(myDict, "name");
+var yearExists = exists(myDict, "year");
+println("Exists 'name' (should be true): " + toString(nameExists));
+println("Exists 'year' (should be false): " + toString(yearExists));
+
+// Test delete
+println("\n--- Testing delete ---");
+var deleteSuccess = delete(myDict, "version");
+println("Delete 'version' success (should be true): " + toString(deleteSuccess));
+var versionAfterDelete = get(myDict, "version");
+println("Get 'version' after delete (should be nil): " + toString(versionAfterDelete));
+var versionExistsAfterDelete = exists(myDict, "version");
+println("Exists 'version' after delete (should be false): " + toString(versionExistsAfterDelete));
+
+// Test getting a non-existent key
+println("\n--- Testing non-existent key ---");
+var nonExistent = get(myDict, "non_existent_key");
+println("Get 'non_existent_key' (should be nil): " + toString(nonExistent));

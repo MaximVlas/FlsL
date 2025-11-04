@@ -1,0 +1,24 @@
+var startTime = clock();
+
+for (var i = 0; i <= 1000000; i = i + 1) {
+  println (i);
+}
+
+var endTime = clock();
+var elapsedTime = endTime - startTime;
+
+println ("Done counting!");
+println ("The loop took:");
+println (elapsedTime);
+println ("seconds.");
+
+
+// OUTPUT
+
+//
+//maxim@maxim-82k2:~/Documents/FishyC/Fls/examples$ ./fls ./1/counting.fls
+//Done counting!
+//The loop took:
+//2.64893
+//seconds.
+//

@@ -1,0 +1,39 @@
+import "std/datatypes.fls";
+
+println("--- Testing Datatypes Library ---");
+
+// --- Test Stack ---
+println("\n--- Testing Stack ---");
+var s = newStack();
+println("New stack is empty: " + toString(stackIsEmpty(s)));
+
+stackPush(s, 10);
+stackPush(s, 20);
+println("Stack size after pushing 2 items: " + toString(stackSize(s)));
+println("Stack peek (should be 20): " + toString(stackPeek(s)));
+
+var popped = stackPop(s);
+println("Popped item (should be 20): " + toString(popped));
+println("Stack size after pop: " + toString(stackSize(s)));
+println("Stack peek after pop (should be 10): " + toString(stackPeek(s)));
+
+stackClear(s);
+println("Stack is empty after clear: " + toString(stackIsEmpty(s)));
+
+// --- Test Queue ---
+println("\n--- Testing Queue ---");
+var q = newQueue();
+println("New queue is empty: " + toString(queueIsEmpty(q)));
+
+enqueue(q, "A");
+enqueue(q, "B");
+println("Queue size after enqueuing 2 items: " + toString(queueSize(q)));
+println("Queue peek (should be 'A'): " + queuePeek(q));
+
+var dequeued = dequeue(q);
+println("Dequeued item (should be 'A'): " + dequeued);
+println("Queue size after dequeue: " + toString(queueSize(q)));
+println("Queue peek after dequeue (should be 'B'): " + queuePeek(q));
+
+queueClear(q);
+println("Queue is empty after clear: " + toString(queueIsEmpty(q)));

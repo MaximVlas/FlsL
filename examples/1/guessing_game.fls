@@ -1,0 +1,24 @@
+// --- Number Guessing Game ---
+
+println("I'm thinking of a number between 1 and 100.");
+println("Try to guess what it is!");
+
+var secret_number = randomInt(1, 100); // The secret number to guess
+var guess = -1;
+var attempts = 0;
+
+while (guess != secret_number) {
+  println("Enter your guess: ");
+  var input_str = input();
+  guess = toNum(input_str); // Assuming a toNum function exists or we need to add it
+  attempts = attempts + 1;
+
+  if (guess < secret_number) {
+    println("Too low! Try again.");
+  } else if (guess > secret_number) {
+    println("Too high! Try again.");
+  } else {
+    println("\nCongratulations! You guessed the number!");
+    println("It took you " + toString(attempts) + " attempts.");
+  }
+}

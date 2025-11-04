@@ -1,0 +1,101 @@
+import "std/fs.fls";
+
+println("--- Testing Filesystem Library ---");
+
+var testFilePath = "./fs_test_file.tmp";
+var testContent = "Hello, FLS Filesystem!"; // 22 chars
+
+// --- Test fsWriteFile and fsIsFile ---
+println("\n--- Writing and checking file ---");
+var writeSuccess = fsWriteFile(testFilePath, testContent);
+println("fsWriteFile success: " + toString(writeSuccess));
+
+var isAFile = fsIsFile(testFilePath);
+println("fsIsFile on new file (should be true): " + toString(isAFile));
+
+var isADir = fsIsDir("./");
+println("fsIsDir on current directory (should be true): " + toString(isADir));
+
+// --- Test fsFileSize ---
+println("\n--- Checking file size ---");
+var size = fsFileSize(testFilePath);
+println("fsFileSize (should be 22): " + toString(size));
+
+// --- Test fsReadFile ---
+println("\n--- Reading file ---");
+var content = fsReadFile(testFilePath);
+println("fsReadFile content: " + content);
+if (content == testContent) {
+    println("File content matches what was written.");
+} else {
+    println("File content does NOT match!");
+}
+
+// --- Test fsListDir ---
+println("\n--- Listing directory ---");
+var dirContents = fsListDir("./");
+// We can't easily check the full list, but we can confirm it's a list
+println("fsListDir returned a list of length: " + toString(listLen(dirContents)));
+
+// --- Test fsDeleteFile ---
+println("\n--- Deleting file ---");
+var deleteSuccess = fsDeleteFile(testFilePath);
+println("fsDeleteFile success: " + toString(deleteSuccess));
+
+var fileExistsAfterDelete = fsIsFile(testFilePath);
+println("fsIsFile after delete (should be false): " + toString(fileExistsAfterDelete));
+
+// --- Test fsCreateDir and fsRename ---
+println("\n--- Testing directory creation and renaming ---");
+var testDir = "./test_dir";
+var renamedDir = "./renamed_dir";
+
+// Create directory
+var dirSuccess = fsCreateDir(testDir);
+println("fsCreateDir success: " + toString(dirSuccess));
+var isDirAfterCreate = fsIsDir(testDir);
+println("fsIsDir on new directory (should be true): " + toString(isDirAfterCreate));
+
+// Rename directory
+var renameSuccess = fsRename(testDir, renamedDir);
+println("fsRename success: " + toString(renameSuccess));
+var isDirAfterRename = fsIsDir(renamedDir);
+println("fsIsDir on renamed directory (should be true): " + toString(isDirAfterRename));
+var oldDirExists = fsIsDir(testDir);
+println("fsIsDir on old directory (should be false): " + toString(oldDirExists));
+
+// Cleanup: delete the renamed directory
+var deleteDirSuccess = fsRemoveDir(renamedDir);
+println("Cleanup delete directory success: " + toString(deleteDirSuccess));
+var dirExistsAfterDelete = fsIsDir(renamedDir);
+println("fsIsDir after delete (should be false): " + toString(dirExistsAfterDelete));
+
+// --- Test fsPathExists and fsAppendFile ---
+println("\n--- Testing path existence and appending ---");
+var appendFilePath = "./append_test.tmp";
+
+// Test pathExists on a non-existent file
+var pathExistsBefore = fsPathExists(appendFilePath);
+println("fsPathExists before creation (should be false): " + toString(pathExistsBefore));
+
+// Write initial content
+fsWriteFile(appendFilePath, "Initial content. ");
+var pathExistsAfter = fsPathExists(appendFilePath);
+println("fsPathExists after creation (should be true): " + toString(pathExistsAfter));
+
+// Append content
+var appendSuccess = fsAppendFile(appendFilePath, "Appended content.");
+println("fsAppendFile success: " + toString(appendSuccess));
+
+// Verify final content
+var finalContent = fsReadFile(appendFilePath);
+println("Final content: " + finalContent);
+var expectedContent = "Initial content. Appended content.";
+if (finalContent == expectedContent) {
+    println("Appended content is correct.");
+} else {
+    println("Appended content is NOT correct!");
+}
+
+// Cleanup
+fsDeleteFile(appendFilePath);

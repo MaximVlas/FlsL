@@ -1,0 +1,14 @@
+println("sqrt(16) = ");
+println(sqrt(16));
+
+println("sin(0) = ");
+println(sin(0));
+
+println("cos(0) = ");
+println(cos(0));
+
+println("tan(0) = ");
+println(tan(0));
+
+println("abs(-5.5) = ");
+println(abs(-5.5));

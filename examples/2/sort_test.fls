@@ -1,0 +1,55 @@
+import "std/sort.fls";
+
+println("--- Testing Sort Library ---");
+
+var unsortedList = [5, 1, 4, 2, 8];
+println("Unsorted list: [5, 1, 4, 2, 8]");
+
+var sortedList = bubbleSort(unsortedList);
+
+// Note: FLS currently doesn't have a built-in way to print lists directly,
+// so we'll check the length and a few elements to verify.
+println("Sorted list length: " + toString(listLen(sortedList)));
+println("First element (should be 1): " + toString(listGet(sortedList, 0)));
+println("Last element (should be 8): " + toString(listGet(sortedList, 4)));
+
+println("--- bubbleSort with a more complex list ---");
+var unsortedList2 = [64, 34, 25, 12, 22, 11, 90];
+println("Unsorted list: [64, 34, 25, 12, 22, 11, 90]");
+var sortedList2 = bubbleSort(unsortedList2);
+println("Sorted list length: " + toString(listLen(sortedList2)));
+println("First element (should be 11): " + toString(listGet(sortedList2, 0)));
+println("Last element (should be 90): " + toString(listGet(sortedList2, 6)));
+
+println("\n--- Testing quickSort ---");
+var unsortedList3 = [5, 1, 4, 2, 8];
+var sortedList3 = quickSort(unsortedList3);
+println("quickSort [5, 1, 4, 2, 8] -> first element (should be 1): " + toString(listGet(sortedList3, 0)));
+println("quickSort [5, 1, 4, 2, 8] -> last element (should be 8): " + toString(listGet(sortedList3, 4)));
+
+var unsortedList4 = [64, 34, 25, 12, 22, 11, 90];
+var sortedList4 = quickSort(unsortedList4);
+println("quickSort [64, 34, 25, 12, 22, 11, 90] -> first element (should be 11): " + toString(listGet(sortedList4, 0)));
+println("quickSort [64, 34, 25, 12, 22, 11, 90] -> last element (should be 90): " + toString(listGet(sortedList4, 6)));
+
+println("\n--- Testing insertionSort ---");
+var unsortedList5 = [5, 1, 4, 2, 8];
+var sortedList5 = insertionSort(unsortedList5);
+println("insertionSort [5, 1, 4, 2, 8] -> first element (should be 1): " + toString(listGet(sortedList5, 0)));
+println("insertionSort [5, 1, 4, 2, 8] -> last element (should be 8): " + toString(listGet(sortedList5, 4)));
+
+var unsortedList6 = [64, 34, 25, 12, 22, 11, 90];
+var sortedList6 = insertionSort(unsortedList6);
+println("insertionSort [64, 34, 25, 12, 22, 11, 90] -> first element (should be 11): " + toString(listGet(sortedList6, 0)));
+println("insertionSort [64, 34, 25, 12, 22, 11, 90] -> last element (should be 90): " + toString(listGet(sortedList6, 6)));
+
+println("\n--- Testing mergeSort ---");
+var unsortedList7 = [5, 1, 4, 2, 8];
+var sortedList7 = mergeSort(unsortedList7);
+println("mergeSort [5, 1, 4, 2, 8] -> first element (should be 1): " + toString(listGet(sortedList7, 0)));
+println("mergeSort [5, 1, 4, 2, 8] -> last element (should be 8): " + toString(listGet(sortedList7, 4)));
+
+var unsortedList8 = [64, 34, 25, 12, 22, 11, 90];
+var sortedList8 = mergeSort(unsortedList8);
+println("mergeSort [64, 34, 25, 12, 22, 11, 90] -> first element (should be 11): " + toString(listGet(sortedList8, 0)));
+println("mergeSort [64, 34, 25, 12, 22, 11, 90] -> last element (should be 90): " + toString(listGet(sortedList8, 6)));

@@ -1,0 +1,26 @@
+// Creates a new, empty dictionary.
+export fun new() {
+    return newDict(); // Native function
+}
+
+// Sets a key-value pair in a dictionary.
+export fun set(dict, key, value) {
+    return dictSet(dict, key, value); // Native function
+}
+
+// Gets a value from a dictionary by its key.
+// Returns nil if the key is not found.
+export fun get(dict, key) {
+    return dictGet(dict, key); // Native function
+}
+
+// Deletes a key-value pair from a dictionary.
+// Returns true if the key was found and deleted, false otherwise.
+export fun delete(dict, key) {
+    return dictDelete(dict, key); // Native function
+}
+
+// Checks if a key exists in a dictionary.
+export fun exists(dict, key) {
+    return dictExists(dict, key); // Native function
+}

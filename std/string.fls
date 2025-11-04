@@ -1,0 +1,70 @@
+// Fls Standard String Library
+
+// Note: Many core string functions are implemented natively in C for performance
+// and are available globally. These include:
+// - trim(str)        : Removes leading/trailing whitespace.
+// - toUpperCase(str) : Converts a string to uppercase.
+// - toLowerCase(str) : Converts a string to lowercase.
+// - split(str, delim): Splits a string by a delimiter into a list.
+// - startsWith(str, prefix)
+// - endsWith(str, suffix)
+// - substring(str, start, count)
+// - len(str)
+
+// This module provides additional string utilities implemented in pure Fls.
+
+// Joins a list of strings into a single string with a separator.
+export fun join(list, separator) {
+  if (listLen(list) == 0) return "";
+
+  var result = listGet(list, 0);
+  for (var i = 1; i < listLen(list); i = i + 1) {
+    result = result + separator + listGet(list, i);
+  }
+  return result;
+}
+
+// Replaces all occurrences of a substring with another string.
+export fun replace(str, old, new) {
+  var parts = split(str, old);
+  return join(parts, new);
+}
+
+// Reverses a string.
+export fun reverse(str) {
+  var reversed = "";
+  for (var i = len(str) - 1; i >= 0; i = i - 1) {
+    reversed = reversed + substring(str, i, i + 1);
+  }
+  return reversed;
+}
+
+// Pads a string on the left to a certain length with a character.
+export fun padLeft(str, length, char) {
+  if (len(str) >= length) return str;
+  var padding = "";
+  while (len(padding) < length - len(str)) {
+    padding = padding + char;
+  }
+  return substring(padding, 0, length - len(str)) + str;
+}
+
+// Pads a string on the right to a certain length with a character.
+export fun padRight(str, length, char) {
+  if (len(str) >= length) return str;
+  var padding = "";
+  while (len(padding) < length - len(str)) {
+    padding = padding + char;
+  }
+  return str + substring(padding, 0, length - len(str));
+}
+
+// Repeats a string a given number of times.
+export fun repeat(str, count) {
+  if (count < 0) return "";
+  var result = "";
+  for (var i = 0; i < count; i = i + 1) {
+    result = result + str;
+  }
+  return result;
+}

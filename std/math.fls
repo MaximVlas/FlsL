@@ -1,0 +1,80 @@
+// Fls Standard Math Library
+
+// --- Constants ---
+export var PI = 3.141592653589793;
+export var E = 2.718281828459045;
+
+// --- Basic Functions ---
+
+// Returns the absolute value of a number.
+export fun abs(n) {
+  if (n < 0) {
+    return -n;
+  }
+  return n;
+}
+
+// Returns the greater of two numbers.
+export fun max(a, b) {
+  if (a > b) {
+    return a;
+  }
+  return b;
+}
+
+// Returns the smaller of two numbers.
+export fun min(a, b) {
+  if (a < b) {
+    return a;
+  }
+  return b;
+}
+
+// Returns the sign of a number (-1, 0, or 1).
+export fun sign(n) {
+  if (n > 0) return 1;
+  if (n < 0) return -1;
+  return 0;
+}
+
+// --- Angle Conversions ---
+
+// Converts an angle from radians to degrees.
+export fun degrees(rad) {
+  return rad * (180 / PI);
+}
+
+// Converts an angle from degrees to radians.
+export fun radians(deg) {
+  return deg * (PI / 180);
+}
+
+// --- Number Theory ---
+
+// Calculates the factorial of a non-negative integer.
+export fun factorial(n) {
+  if (n < 0) return NIL; // Factorial is not defined for negative numbers
+  if (n == 0) return 1;
+  var result = 1;
+  for (var i = 2; i <= n; i = i + 1) {
+    result = result * i;
+  }
+  return result;
+}
+
+// Computes the greatest common divisor (GCD) of two integers using the Euclidean algorithm.
+export fun gcd(a, b) {
+  while (b) {
+    var temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
+}
+
+// Computes the least common multiple (LCM) of two integers.
+export fun lcm(a, b) {
+  // LCM(a, b) = |a * b| / GCD(a, b)
+  if (a == 0 or b == 0) return 0;
+  return abs(a * b) / gcd(a, b);
+}

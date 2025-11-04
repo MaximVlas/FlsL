@@ -1,0 +1,19 @@
+import "std/time.fls";
+
+println("--- Testing Time Library ---");
+
+// Test time()
+println("Current time (from clock()): " + toString(time()));
+
+// Test benchmark()
+fun someWork() {
+    var i = 0;
+    while (i < 100000) {
+        i = i + 1;
+    }
+}
+
+var duration = benchmark(someWork);
+println("Benchmark for someWork(): " + toString(duration) + " seconds");
+
+println("Time after benchmark: " + toString(time()));

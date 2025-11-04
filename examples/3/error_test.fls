@@ -1,0 +1,6 @@
+// Test for compile-time error
+//1 + 2 = 3; // Invalid assignment target
+
+// Test for runtime error
+var myList = [1, 2, 3];
+println(myList[5]); // Index out of bounds

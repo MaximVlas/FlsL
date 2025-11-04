@@ -1,0 +1,15 @@
+// math_utils.fls
+// Demonstrates export of functions and variables
+
+export fun add(a, b) {
+  return a + b;
+}
+
+export fun subtract(a, b) {
+  return a - b;
+}
+
+export var pi = 3.141592653589793;
+
+// Not exported: should remain module-private
+var secret_value = 42;

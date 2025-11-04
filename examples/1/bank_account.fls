@@ -1,0 +1,65 @@
+// bank_account.fls
+
+var balance = 100;
+
+fun printBalance() {
+  println("Current balance:");
+  println(balance);
+}
+
+fun deposit(amount) {
+  balance = balance + amount;
+  println("Deposited:");
+  println(amount);
+  printBalance();
+}
+
+fun withdraw(amount) {
+  if (amount > balance) {
+    println("Error: Insufficient funds.");
+  } else {
+    balance = balance - amount;
+    println("Withdrew:");
+    println(amount);
+  }
+  printBalance();
+}
+
+
+println("Welcome to FLS Bank!");
+printBalance();
+println("---");
+
+deposit(50);
+println("---");
+
+withdraw(25);
+println("---");
+
+withdraw(200);
+println("---");
+
+
+
+// OUTPUT
+
+//
+//maxim@maxim-82k2:~/Documents/FishyC/Fls/examples$ ./fls ./1/bank_account.fls
+//Welcome to FLS Bank!
+//Current balance:
+//100
+//---
+//Deposited:
+//50
+//Current balance:
+//150
+//---
+//Withdrew:
+//25
+//Current balance:
+//125
+//---
+//Error: Insufficient funds.
+//Current balance:
+//125
+//---

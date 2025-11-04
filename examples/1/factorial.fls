@@ -1,0 +1,27 @@
+
+// factorial.fls
+
+fun factorial(n) {
+  if (n <= 1) {
+    return 1;
+  }
+  return n * factorial(n - 1);
+}
+
+var num = 7;
+println ("Calculating factorial of");
+println (num);
+
+var result = factorial(num);
+println ("Result:");
+println (result); // Should be 5040
+
+// OUTPUT
+
+//
+//maxim@maxim-82k2:~/Documents/FishyC/Fls/examples$ ./fls ./1/factorial.fls
+//Calculating factorial of
+//7
+//Result:
+//5040
+//

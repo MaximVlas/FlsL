@@ -1,0 +1,11 @@
+println("--- Testing system() function ---");
+
+println("\nExecuting 'ls -l':");
+var ls_output = system("ls -l");
+println(ls_output);
+
+println("\nExecuting echo command:");
+var echo_output = system("echo 'Hello from Fls!'");
+println(echo_output);
+
+println("--- Test Complete ---");

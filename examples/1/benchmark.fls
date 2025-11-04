@@ -1,0 +1,35 @@
+fun fib(n) {
+  if (n < 2) {
+    return n;
+  }
+  return fib(n - 2) + fib(n - 1);
+}
+
+var n = 35;
+
+println("Running FLS benchmark...");
+var startTime = clock();
+var result = fib(n);
+var endTime = clock();
+
+var elapsedTime = endTime - startTime;
+
+println("FLS Benchmark Complete:");
+println("fib(35) is");
+println(result);
+println("Calculation took:");
+println(elapsedTime);
+println("seconds.");
+
+
+// OUTPUT
+
+//
+//maxim@maxim-82k2:~/Documents/FishyC/Fls/examples$ ./fls ./1/benchmark.fls
+//Running FLS benchmark...
+//FLS Benchmark Complete:
+//fib(35) is
+//9.22746e+06
+//Calculation took:
+//1.54747
+//seconds.

@@ -1,0 +1,99 @@
+// Fls Standard Data Types Library
+
+// --- Stack ---
+// A simple Last-In-First-Out (LIFO) stack implementation using a list.
+
+// Creates a new, empty stack.
+export fun newStack() {
+  return []; // A stack is represented by a list.
+}
+
+// Pushes an item onto the top of the stack.
+// - stack: The stack (a list) to push onto.
+// - item: The item to add.
+export fun stackPush(stack, item) {
+  listPush(stack, item);
+}
+
+// Removes and returns the item from the top of the stack.
+// - stack: The stack (a list) to pop from.
+// Returns the popped item, or NIL if the stack is empty.
+export fun stackPop(stack) {
+  return listPop(stack);
+}
+
+// Returns the item at the top of the stack without removing it.
+// - stack: The stack (a list) to peek.
+// Returns the top item, or NIL if the stack is empty.
+export fun stackPeek(stack) {
+  if (listLen(stack) == 0) return NIL;
+  return listGet(stack, listLen(stack) - 1);
+}
+
+// Checks if the stack is empty.
+// - stack: The stack (a list) to check.
+// Returns true if the stack is empty, false otherwise.
+export fun stackIsEmpty(stack) {
+  return listLen(stack) == 0;
+}
+
+// Returns the number of items in the stack.
+// - stack: The stack (a list) to get the size of.
+export fun stackSize(stack) {
+  return listLen(stack);
+}
+
+// Clears all items from the stack.
+// - stack: The stack (a list) to clear.
+export fun stackClear(stack) {
+    listClear(stack);
+}
+
+// --- Queue ---
+// A simple First-In-First-Out (FIFO) queue implementation using a list.
+
+// Creates a new, empty queue.
+export fun newQueue() {
+  return []; // A queue is represented by a list.
+}
+
+// Adds an item to the end of the queue.
+// - queue: The queue (a list) to enqueue to.
+// - item: The item to add.
+export fun enqueue(queue, item) {
+  listPush(queue, item);
+}
+
+// Removes and returns the item from the front of the queue.
+// - queue: The queue (a list) to dequeue from.
+// Returns the dequeued item, or NIL if the queue is empty.
+export fun dequeue(queue) {
+  return listShift(queue);
+}
+
+// Returns the item at the front of the queue without removing it.
+// - queue: The queue (a list) to peek.
+// Returns the front item, or NIL if the queue is empty.
+export fun queuePeek(queue) {
+  if (listLen(queue) == 0) return NIL;
+  return listGet(queue, 0);
+}
+
+// Checks if the queue is empty.
+// - queue: The queue (a list) to check.
+// Returns true if the queue is empty, false otherwise.
+export fun queueIsEmpty(queue) {
+  return listLen(queue) == 0;
+}
+
+// Returns the number of items in the queue.
+// - queue: The queue (a list) to get the size of.
+export fun queueSize(queue) {
+  return listLen(queue);
+}
+
+// Clears all items from the queue.
+// - queue: The queue (a list) to clear.
+export fun queueClear(queue) {
+    listClear(queue);
+}

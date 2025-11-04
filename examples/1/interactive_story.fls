@@ -1,0 +1,27 @@
+// A fun, interactive story generator for the Fls language!
+
+fun play() {
+  println("Welcome to the Fls Story Generator!");
+  println("I will ask you for a few words, and then create a story.");
+
+  var noun = input("Enter a noun: ");
+  var verb = input("Enter a verb (past tense): ");
+  var adjective = input("Enter an adjective: ");
+  var place = input("Enter a place: ");
+
+  println("\n--- Here is your story! ---");
+  var story = "Once upon a time, a " + adjective + " " + noun + " decided to visit " + place + ". ";
+  story = story + "They " + verb + " all the way there, only to find that the entire place was made of cheese!";
+  println(story);
+  println("The End.");
+}
+
+// Main game loop
+var again = "yes";
+while (again == "yes") {
+  play();
+  println("\nWould you like to play again? (yes/no)");
+  again = input("> ");
+}
+
+println("Thanks for playing!");

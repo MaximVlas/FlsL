@@ -1,0 +1,95 @@
+// Code Analyzer for Fls
+// Walks through directories and analyzes code files
+
+// File extensions to analyze
+var code_extensions = [
+    ".c", ".h", ".cpp", ".hpp", ".cc", ".cxx", ".hxx", ".s", ".asm", ".nasm", ".rs", ".zig",
+    ".fls"
+];
+
+// Global counters
+var total_lines = 0;
+var total_chars = 0;
+var files_processed = 0;
+
+// Check if a file has one of the target extensions
+fun hasValidExtension(filename, extensions) {
+  for (var i = 0; i < listLen(extensions); i = i + 1) {
+    if (endsWith(filename, listGet(extensions, i))) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Main execution
+println("--- Fls Code Analyzer ---");
+
+// --- Configuration ---
+// Log level can be: "none", "minimal", "verbose"
+var log_level = "verbose"; 
+var target_directories = ["/home/maxim/Documents/FishyC"];
+var excluded_directories = [
+    // System libraries and toolchains
+    "/usr/lib/llvm-20",
+    "/usr/lib/libreoffice",
+    "/usr/lib/modules",
+    "/usr/include/llvm",
+    "/usr/include/llvm-c",
+    "/usr/share/doc",
+    
+    // User-specific large directories
+    "/home/maxim/.cache",
+    "/home/maxim/.local/share/Steam",
+
+    // Project-specific build outputs
+    "/home/maxim/Documents/FishyC/Fls/target",
+
+    // Exclude python files
+    ".py"
+];
+// --- End Configuration ---
+
+
+// Analyze each directory using the high-performance native function
+for (var i = 0; i < listLen(target_directories); i = i + 1) {
+  var dir = listGet(target_directories, i);
+  println("\nAnalyzing directory: " + dir + " (log level: " + log_level + ")");
+
+  var result = analyze(dir, code_extensions, log_level, excluded_directories);
+
+  if (result != nil) {
+    var num_files = listGet(result, 0);
+    var num_lines = listGet(result, 1);
+    var num_chars = listGet(result, 2);
+
+    files_processed = files_processed + num_files;
+    total_lines = total_lines + num_lines;
+    total_chars = total_chars + num_chars;
+    
+    println("Analyzed " + toString(num_files) + " files in " + dir + ".");
+
+  } else {
+    println("Failed to analyze directory: " + dir);
+  }
+}
+
+// Print summary
+println("\n--- Analysis Complete ---");
+println("Files processed:    " + toString(files_processed));
+println("Total lines of code: " + toString(total_lines));
+println("Total characters:    " + toString(total_chars));
+println("-------------------------");
+
+
+
+// OUTPUT
+//
+//maxim@maxim-82k2:~/Documents/FishyC/Fls/examples$ ./fls ./1/code_analyzer.fls
+//Analyzed 74 files in /home/maxim/Documents/FishyC.
+//\n--- Analysis Complete ---
+//Files processed:    74
+//Total lines of code: 6662
+//Total characters:    191623
+//-------------------------
+//

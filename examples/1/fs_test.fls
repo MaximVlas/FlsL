@@ -1,0 +1,59 @@
+println("--- File System Test Suite ---");
+
+var testDir = "test_dir";
+var testFile1 = testDir + "/file1.txt";
+var testFile2 = testDir + "/file2.txt";
+
+// 0. Cleanup before test
+println("\nStep 0: Cleaning up old artifacts...");
+if (pathExists(testFile1)) { deleteFile(testFile1); }
+if (pathExists(testFile2)) { deleteFile(testFile2); }
+if (pathExists(testDir)) { deleteFile(testDir); }
+println("  -> Cleanup complete.");
+
+// 1. Create a directory
+println("\nStep 1: Creating directory '" + testDir + "'...");
+if (createDir(testDir)) {
+    println("  -> OK: Directory created.");
+} else {
+    println("  -> FAIL: Could not create directory.");
+}
+
+// 2. Write two files
+println("\nStep 2: Writing two files...");
+writeFile(testFile1, "content1");
+writeFile(testFile2, "content2");
+println("  -> OK: Write operations completed.");
+
+// 3. List directory contents
+println("\nStep 3: Listing directory contents...");
+var dirContents = listDir(testDir);
+println("  -> Found " + toString(listLen(dirContents)) + " items.");
+
+var foundFile1 = false;
+var foundFile2 = false;
+for (var i = 0; i < listLen(dirContents); i = i + 1) {
+    var item = listGet(dirContents, i);
+    println("    - " + item);
+    if (item == "file1.txt") { foundFile1 = true; }
+    if (item == "file2.txt") { foundFile2 = true; }
+}
+
+if (foundFile1) {
+    if (foundFile2) {
+        println("  -> OK: All files found in directory listing.");
+    } else {
+        println("  -> FAIL: Did not find all expected files.");
+    }
+} else {
+    println("  -> FAIL: Did not find all expected files.");
+}
+
+// 4. Clean up files and directory
+println("\nStep 4: Cleaning up...");
+deleteFile(testFile1);
+deleteFile(testFile2);
+deleteFile(testDir);
+println("  -> OK: Cleanup complete.");
+
+println("\n--- Test Suite Finished ---");

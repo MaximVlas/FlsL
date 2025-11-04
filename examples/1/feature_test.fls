@@ -1,0 +1,80 @@
+// --- Map Feature Test ---
+println("--- Testing Map Data Structure ---");
+var myMap = map();
+mapSet(myMap, "name", "Fls Language");
+mapSet(myMap, "version", 1.0);
+mapSet(myMap, "stable", false);
+
+println("Initial map:");
+println (myMap);
+println("\n");
+
+var name = mapGet(myMap, "name");
+println("Get 'name': " + name);
+
+var version = mapGet(myMap, "version");
+println("Get 'version': " + toString(version));
+
+println("Deleting 'stable'...");
+mapDelete(myMap, "stable");
+
+println("Map after deletion:");
+println(myMap);
+println("\n");
+
+// --- File I/O Feature Test ---
+println("--- Testing File I/O Operations ---");
+var testFile = "test_file.txt";
+
+println("Writing to " + testFile);
+writeFile(testFile, "Hello, Fls!\n");
+
+println("File content:");
+var content = readFile(testFile);
+println(content);
+
+println("Appending to file...");
+appendFile(testFile, "This is a new line.");
+
+println("File content after append:");
+content = readFile(testFile);
+println(content);
+
+println("File exists: " + toString( pathExists(testFile)));
+println("Is file: " + toString(isFile(testFile)));
+println("Is directory: " + toString(isDir(testFile)));
+println("File size: " + toString(fileSize(testFile)) + " bytes");
+
+println("Deleting file...");
+deleteFile(testFile);
+println("File exists after delete: " + toString(pathExists(testFile)));
+
+// OUTPUT
+
+//
+//maxim@maxim-82k2:~/Documents/FishyC/Fls/examples$ ./fls ./1/feature_test.fls
+//--- Testing Map Data Structure ---
+//Initial map:
+//<map>
+//\n
+//Get 'name': Fls Language
+//Get 'version': 1
+//Deleting 'stable'...
+//Map after deletion:
+//<map>
+//\n
+//--- Testing File I/O Operations ---
+//Writing to test_file.txt
+//File content:
+//Hello, Fls!
+//Appending to file...
+//File content after append:
+//Hello, Fls!
+//This is a new line.
+//File exists: true
+//Is file: true
+//Is directory: false
+//File size: 22 bytes
+//Deleting file...
+//File exists after delete: false
+//

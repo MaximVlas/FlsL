@@ -1,0 +1,47 @@
+// file_viewer.fls
+// A simple program to view the contents of a text file.
+
+println("--- FLS File Viewer ---");
+
+// Ask the user for the path to a file.
+fun endsWith(str, suffix) {
+    var strLen = len(str);
+    var suffixLen = len(suffix);
+    if (suffixLen > strLen) {
+        return false;
+    }
+    return substring(str, strLen - suffixLen, strLen) == suffix;
+}
+
+fun trimQuotes(str) {
+    if (startsWith(str, "'") and endsWith(str, "'")) {
+        return substring(str, 1, len(str) - 1);
+    }
+    return str;
+}
+
+var path = input("Enter the path to a file to view: ");
+
+if (path == nil or path == "") {
+  println("No file path entered. Exiting.");
+} else {
+  path = trimQuotes(path);
+  println("---");
+  println("Attempting to read file: " + path);
+  println("---");
+
+  // Read the file from the disk using the native function.
+  var content = readFile(path);
+
+  // Check if the file was read successfully.
+  if (content == nil) {
+    println("Error: Could not open or read the file at that path.");
+    println("Please make sure the file exists and the path is correct.");
+  } else {
+    println("File content:");
+    println("====================================");
+    println(content);
+    println("====================================");
+    println("End of file.");
+  }
+}
